@@ -1,3 +1,5 @@
+const db = require("../data/dbConfig.js");
+
 module.exports = {
   find,
   findById,
@@ -18,7 +20,10 @@ function findById(id) {
 }
 
 function findSteps(id) {
-  return db("schemes").where({ id });
+  return db("schemes as sch")
+    .join("steps as st", "sch.id", "st.scheme_id")
+    .select("st.id", "sch.scheme_name", "st.step_number", "st.instructions")
+    .where("st.scheme_id", id);
 }
 
 function add(scheme) {
