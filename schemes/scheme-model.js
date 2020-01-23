@@ -8,7 +8,7 @@ module.exports = {
   update,
   remove
 };
-
+``;
 function find() {
   return db("schemes");
 }
@@ -23,6 +23,7 @@ function findSteps(id) {
   return db("schemes as sch")
     .join("steps as st", "sch.id", "st.scheme_id")
     .select("st.id", "sch.scheme_name", "st.step_number", "st.instructions")
+    .orderBy("st.step_number")
     .where("st.scheme_id", id);
 }
 
